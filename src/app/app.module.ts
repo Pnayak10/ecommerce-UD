@@ -4,8 +4,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-
-
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BsNavComponent } from './bs-nav/bs-nav.component';
 import { HomeComponent } from './home/home.component';
@@ -20,6 +19,15 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent} from './login-component/login-component.component';
 import { AuthService} from './auth.service';
+import { AuthGuard} from './auth-guard.service';
+import { UserService } from './user.service';
+import { AdminAuthGuard } from './admin-auth-guard.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CategoryService } from './category.service';
+import { ProductsService } from './products.service';
+import { CustomFormsModule } from 'ng2-validation';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -34,10 +42,14 @@ import { AuthService} from './auth.service';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    CustomFormsModule,
+    BrowserAnimationsModule,
     NgbModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
@@ -45,7 +57,13 @@ import { AuthService} from './auth.service';
     AppRoutingModule
 
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    AuthGuard,
+    UserService,
+    AdminAuthGuard,
+    CategoryService,
+    ProductsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
